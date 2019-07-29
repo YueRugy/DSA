@@ -55,8 +55,32 @@ func lengthLinked(pHead *Node) int {
 	}
 	return length
 }
+func soft(pHead *Node) {
+	if pHead == nil {
+		fmt.Println("链表不存在")
+	}
+	length := lengthLinked(pHead)
+	if length == 0 {
+		return
+	}
+	for i, pData := 0, pHead.pNext; i < length-1; i, pData = i+1, pData.pNext {
+		var address *Node = pData
+		for j, temp := i+1, pData.pNext; j < length; j, temp = j+1, temp.pNext {
+			if (*address).data < (*temp).data {
+				address = temp
+			}
+		}
+		if address != pData {
+			tempData := (*pData).data
+			(*pData).data = (*address).data
+			(*address).data = tempData
+		}
+	}
+}
 func main() {
 	pHead := createLinked()
 	traverseLinked(pHead)
 	fmt.Println(lengthLinked(pHead))
+	soft(pHead)
+	traverseLinked(pHead)
 }
