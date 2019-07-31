@@ -16,9 +16,10 @@ func traverseLinked(pHead *Node) {
 	}
 	headData := (*pHead).pNext
 	for headData != nil {
-		fmt.Printf("val==%d\n", (*headData).data)
+		fmt.Printf("val==%d\t", (*headData).data)
 		headData = (*headData).pNext
 	}
+	fmt.Println()
 }
 
 //创建一个链表
@@ -55,6 +56,28 @@ func lengthLinked(pHead *Node) int {
 	}
 	return length
 }
+
+//pos 表示从第几个位置插入从1开始
+func insert(pHead *Node, pos int, val int) bool {
+	if pHead == nil {
+		return false
+	}
+	index := 0
+	temp := pHead
+	for ; temp != nil && index < pos-1; index++ {
+		temp = (*temp).pNext
+	}
+	if index != pos-1 {
+		return false
+	}
+	node := new(Node)
+	(*node).data = val
+	pTemp := temp.pNext
+	temp.pNext = node
+	(*node).pNext = pTemp
+	return true
+}
+
 func soft(pHead *Node) {
 	if pHead == nil {
 		fmt.Println("链表不存在")
@@ -77,10 +100,38 @@ func soft(pHead *Node) {
 		}
 	}
 }
+
+//pos 从1开始
+func delete(pHead *Node, pos int) bool {
+	if pHead == nil {
+		return false
+	}
+
+	length := lengthLinked(pHead)
+	if pos > length {
+		return false
+	}
+	index := 0
+	temp := pHead
+	for ; index < pos-1 && temp != nil; index++ {
+		temp = (*temp).pNext
+	}
+	if index != pos-1 {
+		return false
+	}
+	temp.pNext = temp.pNext.pNext
+	return true
+}
+
 func main() {
 	pHead := createLinked()
 	traverseLinked(pHead)
-	fmt.Println(lengthLinked(pHead))
-	soft(pHead)
+	delete(pHead, 3)
 	traverseLinked(pHead)
+
+	//	fmt.Println(lengthLinked(pHead))
+	//	soft(pHead)
+	//	traverseLinked(pHead)
+	//	insert(pHead, 1, 35)
+	//	traverseLinked(pHead)
 }
