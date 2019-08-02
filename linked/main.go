@@ -27,15 +27,9 @@ func createLinked() *Node {
 	//创建一个不存放数据存放指向实际意义的第一个节点第一个的头结点
 	var headNode *Node = new(Node)
 	pTail := headNode //便于链表的添加设置一个尾结点
-	fmt.Println("请输入要创建的个数")
-	var len int
-	var val int
-	fmt.Scanf("%d", &len)
-	for i := 0; i < len; i++ {
-		fmt.Println("请输入要增加的数字")
-		fmt.Scanf("%d", &val)
+	for i := 1; i < 6; i++ {
 		pTemp := new(Node)
-		(*pTemp).data = val
+		(*pTemp).data = i
 		(*pTemp).pNext = nil
 		(*pTail).pNext = pTemp
 		pTail = pTemp
@@ -123,10 +117,33 @@ func delete(pHead *Node, pos int) bool {
 	return true
 }
 
+func reverseLinked(pHead **Node) {
+	if *pHead == nil {
+		return
+	}
+
+	newHead := new(Node)
+	for pTemp := (*pHead).pNext; pTemp != nil; pTemp = pTemp.pNext {
+		node := new(Node)
+		node.data = pTemp.data
+
+		if newHead.pNext == nil {
+			newHead.pNext = node
+		} else {
+			pNode := newHead.pNext
+			newHead.pNext = node
+			node.pNext = pNode
+		}
+	}
+	*pHead = newHead
+
+}
+
 func main() {
 	pHead := createLinked()
 	traverseLinked(pHead)
-	delete(pHead, 3)
+	//delete(pHead, 3)
+	reverseLinked(&pHead)
 	traverseLinked(pHead)
 
 	//	fmt.Println(lengthLinked(pHead))
