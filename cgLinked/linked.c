@@ -8,14 +8,25 @@ typedef struct Node
 }NODE, *PNODE;
 PNODE create_list(void);
 void traverse_list(PNODE pHead);
-
+void test(int *p);
 int main(void)
 {
     PNODE pHead=NULL;
     pHead=create_list();
     traverse_list(pHead);
+    int j=11;
+    printf("main address==%p\n",&j);
+    test(&j);
+    printf("main address==%p\n",&j);
+    printf("%s",pHead);
     return 0;
 };
+void test(int *p){
+    int i=10;
+    printf("%p\n",&i);
+    p=&i;
+};
+
 PNODE create_list(void)
 {
     int len;
