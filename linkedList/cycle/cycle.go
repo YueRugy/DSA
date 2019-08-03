@@ -70,8 +70,8 @@ func CountNumber(totalNum int, startNo int, count int) {
 			cur = cur.next
 		}
 		linked.Append(list, cur.data)
-		pre.next = cur.next
 		cur = cur.next
+		pre.next = cur
 	}
 	linked.Iter(list)
 
