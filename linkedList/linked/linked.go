@@ -75,6 +75,16 @@ func Sort(pHead *LinkedList) {
 
 }
 
+func Append(pHead *LinkedList, val int) {
+	temp := pHead
+	for temp.pNext != nil {
+		temp = temp.pNext
+	}
+	node := new(LinkedList)
+	node.data = val
+	temp.pNext = node
+}
+
 func Reverse(pHead **LinkedList) {
 	if pHead == nil || *pHead == nil || (*pHead).pNext == nil || (*pHead).pNext.pNext == nil {
 		return

@@ -1,23 +1,27 @@
 package main
 
 import (
-	"dsa/linkedList/doubleLinked"
+	"dsa/linkedList/cycle"
+	_ "dsa/linkedList/doubleLinked"
 	_ "dsa/linkedList/linked"
 	_ "fmt"
 )
 
 func main() {
+	//pCycle := cycle.InitCycle(5)
+	//cycle.Iter(pCycle)
+	cycle.CountNumber(5, 2, 3)
 
-	pHead := doubleLinked.InitDoubleLinked()
-	doubleLinked.Append(pHead, 1)
-	doubleLinked.Append(pHead, 2)
-	doubleLinked.Append(pHead, 3)
-	doubleLinked.AddPre(pHead, 6)
-	doubleLinked.Add(pHead, 7, 1)
-	doubleLinked.Add(pHead, 8, 6)
-	doubleLinked.Add(pHead, 5, 3)
-	doubleLinked.Delete(pHead, 2)
-	doubleLinked.Iter(pHead)
+	//pHead := doubleLinked.InitDoubleLinked()
+	//doubleLinked.Append(pHead, 1)
+	//doubleLinked.Append(pHead, 2)
+	//doubleLinked.Append(pHead, 3)
+	//doubleLinked.AddPre(pHead, 6)
+	//doubleLinked.Add(pHead, 7, 1)
+	//doubleLinked.Add(pHead, 8, 6)
+	//doubleLinked.Add(pHead, 5, 3)
+	//doubleLinked.Delete(pHead, 2)
+	//doubleLinked.Iter(pHead)
 	//doubleLinked.AddPre(pHead, 1)
 
 	//doubleLinked.AddPre(pHead, 2)
