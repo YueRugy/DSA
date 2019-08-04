@@ -4,21 +4,44 @@ import (
 	_ "dsa/linkedList/arrayStack"
 	_ "dsa/linkedList/cycle"
 	_ "dsa/linkedList/doubleLinked"
+	"dsa/linkedList/genericStack"
 	_ "dsa/linkedList/linked"
-	"dsa/linkedList/linkedStack"
-	_ "fmt"
+	_ "dsa/linkedList/linkedStack"
+	"fmt"
+	_ "strings"
 )
 
+//func test(index ...*int) {
+//	if index != nil {
+//		*index[0] = 11
+//	}
+//}
 func main() {
-	ls := linkedStack.InitLinkedStack()
-	for index := 1; index <= 6; index++ {
-		linkedStack.Push(ls, index)
+	var str string = "abcdefg"
+	array := []rune(str)
+	for _, temp := range array {
+		fmt.Printf("%d  %T\n", temp, temp)
 	}
-	linkedStack.Iter(ls)
-	for index := 7; index >= 0; index-- {
-		linkedStack.Pop(ls)
-	}
-	linkedStack.Iter(ls)
+	fmt.Println(string(array[0]))
+	gs := genericStack.InitGenericStack()
+	genericStack.Push(gs, "haha")
+	_, temp := genericStack.Pop(gs)
+	var num string = temp.(string)
+	fmt.Println(num)
+	//index := 12
+	//test(&index)
+	//fmt.Println(index)
+	//test()
+
+	//ls := linkedStack.InitLinkedStack()
+	//for index := 1; index <= 6; index++ {
+	//	linkedStack.Push(ls, index)
+	//}
+	//linkedStack.Iter(ls)
+	//for index := 7; index >= 0; index-- {
+	//	linkedStack.Pop(ls)
+	//}
+	//linkedStack.Iter(ls)
 	//as := arrayStack.InitArrayStack()
 	//for index := 1; index <= 6; index++ {
 	//	arrayStack.Push(as, index)
