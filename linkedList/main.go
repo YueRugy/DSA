@@ -2,9 +2,10 @@ package main
 
 import (
 	_ "dsa/linkedList/arrayStack"
+	"dsa/linkedList/cal"
 	_ "dsa/linkedList/cycle"
 	_ "dsa/linkedList/doubleLinked"
-	"dsa/linkedList/genericStack"
+	_ "dsa/linkedList/genericStack"
 	_ "dsa/linkedList/linked"
 	_ "dsa/linkedList/linkedStack"
 	"fmt"
@@ -17,17 +18,20 @@ import (
 //	}
 //}
 func main() {
-	var str string = "abcdefg"
-	array := []rune(str)
-	for _, temp := range array {
-		fmt.Printf("%d  %T\n", temp, temp)
-	}
-	fmt.Println(string(array[0]))
-	gs := genericStack.InitGenericStack()
-	genericStack.Push(gs, "haha")
-	_, temp := genericStack.Pop(gs)
-	var num string = temp.(string)
+	str := "3*5+20*6-7+8"
+	num := cal.Cal(str)
 	fmt.Println(num)
+	//var str string = "abcdefg"
+	//array := []rune(str)
+	//for _, temp := range array {
+	//	fmt.Printf("%d  %T\n", temp, temp)
+	//}
+	//fmt.Println(string(array[0]))
+	//gs := genericStack.InitGenericStack()
+	//genericStack.Push(gs, "haha")
+	//_, temp := genericStack.Pop(gs)
+	//var num string = temp.(string)
+	//fmt.Println(num)
 	//index := 12
 	//test(&index)
 	//fmt.Println(index)

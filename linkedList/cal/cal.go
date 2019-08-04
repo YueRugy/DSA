@@ -48,6 +48,7 @@ func Cal(str string, index ...*int) int {
 					genericStack.Push(operStack, array[cursor])
 				} else { //如果当前运算符的优先级比较低则从numStack pop2个元素，从operStack pop一个运算符
 					//再把结果push到numStack 当前运算符入栈
+					genericStack.Iter(numStack)
 					_, num1Inter := genericStack.Pop(numStack)
 					_, num2Inter := genericStack.Pop(numStack)
 					num1 := num1Inter.(int)
@@ -58,19 +59,30 @@ func Cal(str string, index ...*int) int {
 					genericStack.Push(operStack, array[cursor])
 				}
 			}
+
+			cursor++
 		}
 	}
 	//计算最后的结果
+	return complete(numStack, operStack)
 
-	_, num1Inter := genericStack.Pop(numStack)
-	_, num2Inter := genericStack.Pop(numStack)
-	num1 := num1Inter.(int)
-	num2 := num2Inter.(int)
-	_, operInter := genericStack.Pop(operStack)
-	oper := operInter.(rune)
-
-	return Mathematical(num1, num2, oper)
 }
+func complete(numStack *genericStack.GenericStack, operStack *genericStack.GenericStack) int {
+	for !genericStack.IsEmpty(operStack) {
+		_, num1Inter := genericStack.Pop(numStack)
+		_, num2Inter := genericStack.Pop(numStack)
+		num1 := num1Inter.(int)
+		num2 := num2Inter.(int)
+		_, operInter := genericStack.Pop(operStack)
+		oper := operInter.(rune)
+		genericStack.Push(numStack, Mathematical(num1, num2, oper))
+	}
+	_, resIter := genericStack.Pop(numStack)
+	res := resIter.(int)
+	return res
+
+}
+
 func Priority(ch rune) int {
 	if ch == '*' || ch == '/' {
 		return 1
