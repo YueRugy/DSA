@@ -18,9 +18,10 @@ import (
 //	}
 //}
 func main() {
-	str := "3*5+20*6-7+8"
+	str := "3*5+20*(6+7*(8-6))"
 	num := cal.Cal(str)
 	fmt.Println(num)
+
 	//var str string = "abcdefg"
 	//array := []rune(str)
 	//for _, temp := range array {

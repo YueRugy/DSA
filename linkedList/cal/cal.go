@@ -8,14 +8,10 @@ import (
 	_ "strings"
 )
 
-func Cal(str string, index ...*int) int {
+func Cal(str string) int {
 	numStack := genericStack.InitGenericStack()
 	operStack := genericStack.InitGenericStack()
 	cursor := 0
-	if index != nil {
-		cursor = *index[0]
-	}
-
 	array := []rune(str)
 	length := len(array)
 	for cursor < length {
@@ -61,12 +57,39 @@ func Cal(str string, index ...*int) int {
 			}
 
 			cursor++
+		} else if IsBrackets(array[cursor]) { //如果是括号找到匹配的括号最后运算必然得到一个数字值push到numStack中
+			matchIndex := MatchBrackets(array[cursor+1:length]) + cursor + 1 //计算这里的matchIndex
+			tempArray := array[cursor+1 : matchIndex]                        //得到新的rune
+			resNum := Cal(string(tempArray))                                 //用括号的得到运算结果值
+			genericStack.Push(numStack, resNum)                              //递归
+			cursor = matchIndex + 1                                          //游标移动到matchIndex的后一位
 		}
+
 	}
 	//计算最后的结果
 	return complete(numStack, operStack)
 
 }
+
+func MatchBrackets(str []rune) int { //匹配括号返回坐标
+	//左括号为1
+	left, right := 1, 0 //左括号==1右括号==0
+	resIndex := 0
+	for index, temp := range str {
+		if temp == '(' {
+			left++
+		}
+		if temp == ')' {
+			right++
+		}
+		if left == right {
+			resIndex = index
+			break
+		}
+	}
+	return resIndex
+}
+
 func complete(numStack *genericStack.GenericStack, operStack *genericStack.GenericStack) int {
 	for !genericStack.IsEmpty(operStack) {
 		_, num1Inter := genericStack.Pop(numStack)
