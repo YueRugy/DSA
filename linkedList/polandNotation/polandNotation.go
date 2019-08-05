@@ -43,18 +43,21 @@ func Notaction(expression string) string {
 			if genericStack.IsEmpty(s1) { //栈空入栈
 				genericStack.Push(s1, string(array[cursor]))
 			} else {
-				_, tempIter := genericStack.Peek(s1)
-				temp := tempIter.(string)
-				tempArray := []rune(temp)
-				//比较优先级
-				if cal.Priority(array[cursor]) > cal.Priority(tempArray[0]) || cal.IsLeftBrackets(tempArray[0]) { //如果比栈顶的优先级高站街入栈
-					genericStack.Push(s1, string(array[cursor]))
-				} else { //从s1弹出入s2 新的运算符入s1栈
-					_, operIter := genericStack.Pop(s1)
-					oper := operIter.(string)
-					genericStack.Push(s2, oper)
-					genericStack.Push(s1, string(array[cursor]))
+
+				for !genericStack.IsEmpty(s1) { //循环与s1(运算符栈）栈顶比较
+					_, tempIter := genericStack.Peek(s1)
+					temp := tempIter.(string)
+					tempArray := []rune(temp)
+					//比较优先级
+					if cal.Priority(array[cursor]) > cal.Priority(tempArray[0]) || cal.IsLeftBrackets(tempArray[0]) { //如果比栈顶的优先级高站街入栈并退出循环
+						break
+					} else { //循环与栈顶元素比较 并从s1弹出入s2 新的运算符入s1栈
+						_, operIter := genericStack.Pop(s1)
+						oper := operIter.(string)
+						genericStack.Push(s2, oper)
+					}
 				}
+				genericStack.Push(s1, string(array[cursor]))
 			}
 
 		} else if cal.IsBrackets(array[cursor]) { //如果是左括号直接入栈
