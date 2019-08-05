@@ -2,12 +2,13 @@ package main
 
 import (
 	_ "dsa/linkedList/arrayStack"
-	"dsa/linkedList/cal"
+	_ "dsa/linkedList/cal"
 	_ "dsa/linkedList/cycle"
 	_ "dsa/linkedList/doubleLinked"
 	_ "dsa/linkedList/genericStack"
 	_ "dsa/linkedList/linked"
 	_ "dsa/linkedList/linkedStack"
+	"dsa/linkedList/polandNotation"
 	"fmt"
 	_ "strings"
 )
@@ -18,8 +19,12 @@ import (
 //	}
 //}
 func main() {
-	str := "3*5+20*(6+7*(8-6))"
-	num := cal.Cal(str)
+	//str := "3*5+20*(6+7*(8-6))"
+	//num := cal.Cal(str)
+	//fmt.Println(num)
+
+	str := "3,4,*,6,+,20,+"
+	num := polandNotation.CalStr(str)
 	fmt.Println(num)
 
 	//var str string = "abcdefg"
