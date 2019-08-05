@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"dsa/linkedList/cal"
 	"dsa/linkedList/genericStack"
+	_ "dsa/utils"
 	"fmt"
 	"regexp"
 	"strconv"
@@ -12,7 +13,12 @@ import (
 
 const sep string = ","
 
-func Notaction(expression string) {
+func Cal(str string) int {
+	str = Notaction(str)
+	return CalStr(str)
+}
+
+func Notaction(expression string) string {
 	s1 := genericStack.InitGenericStack()
 	s2 := genericStack.InitGenericStack()
 	array := []rune(expression)
@@ -21,7 +27,7 @@ func Notaction(expression string) {
 	for cursor <= length-1 {
 		if !cal.IsOper(array[cursor]) && !cal.IsBrackets(array[cursor]) { //如果是数字要考虑多位数
 			if cursor == length-1 { //切片的最后一位肯定不是多位数
-				genericStack.Push(s2, array[cursor])
+				genericStack.Push(s2, string(array[cursor]))
 			} else {
 				var buff bytes.Buffer
 				buff.Grow(length)
@@ -35,61 +41,64 @@ func Notaction(expression string) {
 
 		} else if cal.IsOper(array[cursor]) { //如果是操作符
 			if genericStack.IsEmpty(s1) { //栈空入栈
-				genericStack.Push(s1, array[cursor])
+				genericStack.Push(s1, string(array[cursor]))
 			} else {
 				_, tempIter := genericStack.Peek(s1)
-				temp := tempIter.(rune)
-				if cal.IsBrackets(array[cursor]) { //如果是左括号直接入栈
-					if cal.IsLeftBrackets(array[cursor]) {
-						genericStack.Push(s1, array[cursor])
-					} else { //从s1弹出直到碰到左括号为止 入s2 括号不入
-						for !genericStack.IsEmpty(s1) {
-							_, tempIter := genericStack.Pop(s1)
-							temp := tempIter.(rune)
-							if cal.IsLeftBrackets(temp) {
-								break
-							}
-							genericStack.Push(s2, temp)
-						}
-					}
-
-				} else {
-					//比较优先级
-					if cal.Priority(array[cursor]) > cal.Priority(temp) { //如果比栈顶的优先级高站街入栈
-						genericStack.Push(s1, array[cursor])
-					} else { //从s1弹出入s2
-						_, operIter := genericStack.Pop(s1)
-						oper := operIter.(rune)
-						genericStack.Push(s2, oper)
-					}
+				temp := tempIter.(string)
+				tempArray := []rune(temp)
+				//比较优先级
+				if cal.Priority(array[cursor]) > cal.Priority(tempArray[0]) || cal.IsLeftBrackets(tempArray[0]) { //如果比栈顶的优先级高站街入栈
+					genericStack.Push(s1, string(array[cursor]))
+				} else { //从s1弹出入s2 新的运算符入s1栈
+					_, operIter := genericStack.Pop(s1)
+					oper := operIter.(string)
+					genericStack.Push(s2, oper)
+					genericStack.Push(s1, string(array[cursor]))
 				}
 			}
 
+		} else if cal.IsBrackets(array[cursor]) { //如果是左括号直接入栈
+			if cal.IsLeftBrackets(array[cursor]) {
+				genericStack.Push(s1, string(array[cursor]))
+			} else { //从s1弹出直到碰到左括号为止 入s2 括号不入
+				for !genericStack.IsEmpty(s1) {
+					_, tempIter := genericStack.Pop(s1)
+					temp := tempIter.(string)
+					tempArray := []rune(temp)
+					if cal.IsLeftBrackets(tempArray[0]) {
+						break
+					}
+					genericStack.Push(s2, temp)
+				}
+			}
 		}
 		cursor++
-
 	}
 	//把s1内容转到s2中
 	for !genericStack.IsEmpty(s1) {
 		_, tempIter := genericStack.Pop(s1)
-		temp := tempIter.(rune)
+		temp := tempIter.(string)
 		genericStack.Push(s2, temp)
 	}
 	//颠倒s2
 	for !genericStack.IsEmpty(s2) {
 		_, tempIter := genericStack.Pop(s2)
-		temp := tempIter.(rune)
+		temp := tempIter.(string)
 		genericStack.Push(s1, temp)
 	}
-
+	return getStr(s1)
 }
-func CalStack(gs *genericStack.GenericStack) int {
+func getStr(gs *genericStack.GenericStack) string {
+	var buff bytes.Buffer
 	for !genericStack.IsEmpty(gs) {
 		_, tempIter := genericStack.Pop(gs)
-		temp := tempIter.(rune)
-		fmt.Println(temp)
+		tempStr := tempIter.(string)
+		buff.WriteString(tempStr)
+		buff.WriteString(",")
 	}
-	return 0
+	res := buff.String()[0 : len(buff.String())-1]
+	fmt.Println(res)
+	return res
 }
 
 func CalStr(expression string) int {
