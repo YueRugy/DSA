@@ -8,7 +8,7 @@ import (
 	_ "dsa/linkedList/genericStack"
 	_ "dsa/linkedList/linked"
 	_ "dsa/linkedList/linkedStack"
-	"dsa/linkedList/polandNotation"
+	_ "dsa/linkedList/polandNotation"
 	"fmt"
 	_ "strings"
 )
@@ -19,13 +19,18 @@ import (
 //	}
 //}
 func main() {
+
+	var i int = 10
+	num := i.(int)
+	fmt.Println(num)
+
 	//str := "3*5+20*(6+7*(8-6))"
 	//num := cal.Cal(str)
 	//fmt.Println(num)
 
-	str := "3,4,*,6,+,20,+"
-	num := polandNotation.CalStr(str)
-	fmt.Println(num)
+	//str := "3,4,*,6,+,20,+"
+	//num := polandNotation.CalStr(str)
+	//fmt.Println(num)
 
 	//var str string = "abcdefg"
 	//array := []rune(str)

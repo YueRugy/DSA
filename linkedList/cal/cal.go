@@ -106,6 +106,12 @@ func complete(numStack *genericStack.GenericStack, operStack *genericStack.Gener
 
 }
 
+func IsRightBrackets(ch rune) bool {
+	return ch == ')'
+}
+func IsLeftBrackets(ch rune) bool {
+	return ch == '('
+}
 func Priority(ch rune) int {
 	if ch == '*' || ch == '/' {
 		return 1
