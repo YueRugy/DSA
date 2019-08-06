@@ -1,10 +1,13 @@
 package main
 
 import (
-	"dsa/recursive/maze"
+	_ "dsa/recursive/maze"
+	"dsa/recursive/queue"
 	_ "fmt"
 )
 
 func main() {
-	maze.Maze()
+	//maze.Maze()
+
+	queue.Queue()
 }

@@ -26,9 +26,12 @@ const (
 	Int64Type
 	RuneType
 	StringType
+	Float32Type
+	Float64Type
 )
 
 func AssertType(t interface{}) int {
+
 	switch t.(type) {
 	case bool:
 		return BoolType
